@@ -17,17 +17,17 @@ export default {
         },
         get pass() {
             return 'dkpsojlruaohbfch'
-        }
-    },
-    get code() {
-        return () => {
-            return Math.random().toString(16).slice(2,6).toUpperCase()
-        }
-    },
-    get expire() {
-        // 过期时间
-        return () => {
-            return new Date().getTime() * 60 * 60 * 1000
+        },
+        get code() {
+            return () => {
+                return Math.random().toString(16).slice(2,6).toUpperCase()
+            }
+        },
+        get expire() {
+            // 过期时间
+            return () => {
+                return new Date().getTime() + 30 * 60 * 1000
+            }
         }
     }
 }

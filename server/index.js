@@ -29,9 +29,9 @@ const app = new Koa()
   }))
   app.use(json())
 
-  // mongoose.connect(dbConfig.dbs, {
-  //   useNewUrlParser: true
-  // })
+  mongoose.connect(dbConfig.dbs, {
+    useNewUrlParser: true
+  })
   app.use(passport.initialize())
   app.use(passport.session())
 

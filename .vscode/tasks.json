@@ -1,0 +1,12 @@
+{
+    "version": "2.0.0",
+    "command": "npm",
+    "tasks": [
+      {
+        "label": "dev",
+        // 合起来就是`npm run build`
+        "type": "npm",
+        "script": "dev"
+      }
+    ]
+  }

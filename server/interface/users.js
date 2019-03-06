@@ -30,6 +30,7 @@ router.post('/signup', async (ctx) => {
                 code: -1,
                 msg: '请填写正确的验证码'
             }
+            return false
         }
     }else{
         ctx.body = {
@@ -37,9 +38,8 @@ router.post('/signup', async (ctx) => {
             msg: '请填写验证码'
         }
     }
-
-    let user = await User.find(username)
-    if(user.length) {
+    let userInfo = await User.find({username})
+    if(userInfo.length) {
         ctx.body = {
             code: -1,
             msg: '该用户名已被注册'
@@ -50,7 +50,7 @@ router.post('/signup', async (ctx) => {
     let nuser = await User.create({username, password, email})
     if(nuser) {
         // 是否写入成功
-        let res = await axios.post('/user/signin', {username})
+        let res = await axios.post('/users/signin', {username, password})
         if(res.data && res.data.code === 0) {
             ctx.body = {
                 code: 0,
