@@ -25,6 +25,11 @@ export default {
     Emenu,
     Life,
     Artistic
+  },
+  mounted() {
+    // this.$axios.get('http://api.map.baidu.com/place/v2/search?query=火锅&region=上海&output=json&ak=sWHYsEx1520Ha65G6KUcmYtOgNOY4oPS').then(res => {
+    //   console.log(res)
+    // })
   }
 }
 </script>

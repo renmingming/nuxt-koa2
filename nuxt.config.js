@@ -77,6 +77,7 @@ module.exports = {
   */
   build: {
     transpile: [/^element-ui/],
+    publicPath: '/_nuxt/',
     
     /*
     ** You can extend webpack config here

@@ -8,15 +8,28 @@ import bodyParser from 'koa-bodyparser'
 import session from 'koa-generic-session'
 import Redis from 'koa-redis'
 import json from 'koa-json'
+import httpProxy from 'http-proxy-middleware'
+import k2c from 'koa2-connect'
 import dbConfig from './dbs/config'
 import passport from './interface/utils/passport'
 import users from './interface/users'
 import geo from './interface/geo'
+import search from './interface/search'
 // const history = require('connect-history-api-fallback');
 
 
 const app = new Koa()
-
+  app.use(async(ctx, next) => {
+    if(ctx.url.startsWith('api')) {
+      ctx.respond = false
+      await k2c(httpProxy({
+        target: 'http://api.map.baidu.com',
+        changeOrigin: true,
+        secure: false
+      }))(ctx,next)
+    }
+    await next()
+  })
   // session有关
   app.keys = ['mt', 'keyskeys']
   app.proxy = true
@@ -65,6 +78,7 @@ async function start() {
   }
   app.use(users.routes()).use(users.allowedMethods())
   app.use(geo.routes()).use(geo.allowedMethods())
+  app.use(search.routes()).use(search.allowedMethods())
   app.use(ctx => {
     ctx.status = 200
     ctx.respond = false // Bypass Koa's built-in response handling
